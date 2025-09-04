@@ -13,7 +13,7 @@ client = OpenAI()
 print("API Key loaded:", api_key is not None)
 
 app = Flask(__name__)
-app.secret_key = os.getenv("APP") 
+app.secret_key = os.getenv("APP_SECRET_KEY", "fallback_secret")
 
 TEMP_FOLDER = "temp"
 os.makedirs(TEMP_FOLDER, exist_ok=True)
@@ -74,55 +74,63 @@ def index():
     return render_template('index.html')
 
 @app.route('/upload', methods=['POST'])
+
 def upload_file():
-    if 'file' not in request.files:
-        return jsonify({"status": "error", "message": "No file uploaded."})
+    try:
+        if 'file' not in request.files:
+            return jsonify({"status": "error", "message": "No file uploaded."})
 
-    file = request.files['file']
-    if file.filename == '':
-        return jsonify({"status": "error", "message": "No file selected."})
+        file = request.files['file']
+        if file.filename == '':
+            return jsonify({"status": "error", "message": "No file selected."})
 
-    if not allowed_file(file.filename):
-        return jsonify({"status": "error", "message": "Unsupported file type."})
-    clear_old_images()
-    
-    filename = file.filename
-    file_ext = filename.rsplit('.', 1)[1].lower()
-    temp_path = os.path.join(TEMP_FOLDER, f"temp_upload.{file_ext}")
-    file.save(temp_path)
+        if not allowed_file(file.filename):
+            return jsonify({"status": "error", "message": "Unsupported file type."})
 
-    extracted_text = ""
+        clear_old_images()
+        
+        filename = file.filename
+        file_ext = filename.rsplit('.', 1)[1].lower()
+        temp_path = os.path.join(TEMP_FOLDER, f"temp_upload.{file_ext}")
+        file.save(temp_path)
 
-    if file_ext == "pdf":
-        pages = convert_from_path(temp_path, dpi=300, poppler_path=POPPLER_PATH)
-        for i, page in enumerate(pages):
-            temp_img_path = os.path.join(TEMP_FOLDER, f"page_{i+1}.png")
-            page.save(temp_img_path, "PNG")
+        extracted_text = ""
 
-            image = cv2.imread(temp_img_path)
+        if file_ext == "pdf":
+            pages = convert_from_path(temp_path, dpi=300, poppler_path=POPPLER_PATH)
+            for i, page in enumerate(pages):
+                temp_img_path = os.path.join(TEMP_FOLDER, f"page_{i+1}.png")
+                page.save(temp_img_path, "PNG")
+                image = cv2.imread(temp_img_path)
+                gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+                text = pytesseract.image_to_string(gray, lang="eng")
+                extracted_text += f"\n--- Page {i+1} ---\n\n{text}"
+
+        elif file_ext in ["png", "jpg", "jpeg", "bmp", "tiff"]:
+            image = cv2.imread(temp_path)
+            if image is None:
+                return jsonify({"status": "error", "message": "Could not load image."})
             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-            text = pytesseract.image_to_string(gray, lang="eng")
-            extracted_text += f"\n--- Page {i+1} ---\n\n{text}"
-            
-    elif file_ext in ["png", "jpg", "jpeg", "bmp", "tiff"]:
-        image = cv2.imread(temp_path)
-        if image is None:
-            return jsonify({"status": "error", "message": "Could not load image."})
-        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        extracted_text = pytesseract.image_to_string(gray, lang="eng")
-    elif file_ext == "txt":
-        with open(temp_path, "r", encoding="utf-8") as f:
-            extracted_text = f.read()
-    else:
-        return jsonify({"status": "error", "message": "Unsupported file type for OCR."})
+            extracted_text = pytesseract.image_to_string(gray, lang="eng")
 
-    session["extracted_text"] = extracted_text
+        elif file_ext == "txt":
+            with open(temp_path, "r", encoding="utf-8") as f:
+                extracted_text = f.read()
 
-    output_path = os.path.join(TEMP_FOLDER, "output.txt")
-    with open(output_path, "w", encoding="utf-8") as f:
-        f.write(extracted_text)
+        else:
+            return jsonify({"status": "error", "message": f"Unsupported file type for OCR: {file_ext}"})
 
-    return jsonify({"status": "success", "text": extracted_text})
+        session["extracted_text"] = extracted_text
+        output_path = os.path.join(TEMP_FOLDER, "output.txt")
+        with open(output_path, "w", encoding="utf-8") as f:
+            f.write(extracted_text)
+
+        return jsonify({"status": "success", "message": "File uploaded successfully", "text": extracted_text})
+
+    except Exception as e:
+        import traceback; traceback.print_exc()  # log the actual error
+        return jsonify({"status": "error", "message": f"Server error: {str(e)}"})
+
 
 @app.route("/summarize", methods=["POST"])
 def summarize():

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
 body {
-    background: #f5f6fa;
+    background: #9dc5ed;
     font-family: 'Segoe UI', sans-serif;
     display: flex;
     justify-content: center;
@@ -37,7 +37,7 @@ body {
     width: 100%;
     max-width: 1150px;
     max-height: 800px;
-     justify-content: center;
+    justify-content: center;
 }
 
 .container, .summary-container {
@@ -48,7 +48,7 @@ body {
     flex: 1;
     overflow-y: auto;
     max-height: 110vh;
-     justify-content: center;
+    justify-content: center;
 }
 
 h2 { margin-bottom: 20px; color: #2c3e50; }
@@ -81,7 +81,7 @@ input[type="file"] { display: none; }
 
 #options { display: none; margin-top: 30px; }
 #options button {
-    background: #755fed;
+    background: #37a2ea;
     border: none;
     color: white;
     padding: 10px 20px;
@@ -113,9 +113,8 @@ input[type="file"] { display: none; }
     display: none;
 }
 
-
 .download-btn {
-    background:white;
+    background: white;
     color: white;
     padding: 6px;
     border: none;
@@ -123,20 +122,41 @@ input[type="file"] { display: none; }
     cursor: pointer;
     width: 40px;
     height: 40px;
-    display: flex;
-    margin-left: 200px;
+    display: inline-flex; 
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;   
+    margin-right: 10px;
 }
-
+#downloadSection {
+    margin-top: 10px;
+    display: none;
+    justify-content: flex-end;   /* aligns buttons to the right */
+    align-items: center;
+    gap: 10px;
+}
 
 .download-btn img {
     width: 24px;
     height: 24px;
-    margin-left: 250px;
+    margin-left: 0;
 }
 
-  
-
-
+.mini-loader {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #3498db;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-left: 8px;
+    vertical-align: middle;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg);}
+    100% { transform: rotate(360deg);}
+}
 
 #overlay {
     display: none;
@@ -162,13 +182,49 @@ input[type="file"] { display: none; }
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+.background-title {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    text-align: center;
+    font-size: 4vw;
+    font-weight: bold;
+    color: #d76b9d;
+    opacity: 1;
+    z-index: 100;
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+    margin-top: 20px;
+    letter-spacing: 1px;
 }
+@media (max-width: 700px) {
+    .background-title {
+        font-size: 7vw;
+    }
+}
+.title-logo {
+    height: 3.5vw;
+    vertical-align: middle;
+    margin-right: 18px;
+    opacity: 0.5;
+    
+}
+@media (max-width: 700px) {
+    .title-logo {
+        height: 7vw;
+        margin-right: 10px;
+    }
+}
+
     </style>
 </head>
 <body>
+    <div class="background-title">
+    <img src="https://cdn-icons-png.flaticon.com/512/2910/2910791.png" alt="Logo" class="title-logo">
+    Smart Evidence Extractor
+     </div>
     <div id="message"></div>
 
     <!-- Overlay loader -->
@@ -177,7 +233,7 @@ input[type="file"] { display: none; }
     <div class="main-container">
         <!-- Left Section -->
         <div class="container">
-                      <h2>Upload Your File</h2>
+            <h2>Upload Your File</h2>
             <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
                 <label class="drop-area">
                     <span id="file-label">Click or Drop your file here</span>
@@ -189,29 +245,29 @@ input[type="file"] { display: none; }
             <div id="options">
                 <input type="text" id="keyword" placeholder="Enter keywords for summary">
                 <button id="summaryBtn">Get Summary</button>
+                <span id="summaryLoader" style="display:none; vertical-align: middle;">
+                    <span class="mini-loader"></span>
+                </span>
             </div>
         </div>
 
-      <!-- Right Section (Summary) -->
-<div class="summary-container">
-    <h2>Summary</h2>
-    <div id="summaryWrapper">
-        <div id="summaryResult"></div>
+        <!-- Right Section (Summary) -->
+        <div class="summary-container">
+            <h2>Summary</h2>
+            <div id="summaryWrapper">
+                <div id="summaryResult"></div>
+            </div>
+
+            <div id="downloadSection">
+                <button class="download-btn" onclick="downloadSummary()">
+                    <img src="https://cdn-icons-png.flaticon.com/512/724/724933.png" alt="Download" width="24" height="24">
+                </button>
+                <button class="download-btn" onclick="copySummary()">
+                    <img src="https://cdn-icons-png.flaticon.com/512/60/60990.png" alt="Copy" width="24" height="24">
+                </button>
+            </div>
+        </div>
     </div>
-
-
-    <div id="downloadSection" style="margin-top:10px; display:none; text-align:center;">
-        <button class="download-btn" onclick="downloadSummary()">
-            <img src="https://cdn-icons-png.flaticon.com/512/724/724933.png" alt="Download" width="24" height="24">
-        </button>
-            <!-- Copy Button -->
-    <button class="download-btn" onclick="copySummary()">
-        <img src="https://cdn-icons-png.flaticon.com/512/60/60990.png" alt="Copy" width="24" height="24">
-    </button>
-</div>
- 
-
-
 
 <script>
 function updateFileName(event) {
@@ -255,6 +311,9 @@ document.getElementById('summaryBtn').addEventListener('click',function(){
     }
     const keywords = keywordInput.split(",").map(k => k.trim()).filter(k => k);
 
+    // Show mini loader
+    document.getElementById('summaryLoader').style.display = "inline-block";
+
     fetch('/summarize', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -266,17 +325,23 @@ document.getElementById('summaryBtn').addEventListener('click',function(){
         const summaryResult = document.getElementById('summaryResult');
         const downloadSection = document.getElementById('downloadSection');
 
+        // Hide mini loader
+        document.getElementById('summaryLoader').style.display = "none";
+
         if(data.status === 'success'){
             summaryResult.innerText = data.summary;
             summaryWrapper.style.display = "block";
-            downloadSection.style.display = "block";
+            downloadSection.style.display = "flex";
         } else {
             summaryResult.innerText = data.message;
             summaryWrapper.style.display = "block";
             downloadSection.style.display = "none";
         }
     })
-    .catch(()=> showMessage("error","Error generating summary!"));
+    .catch(()=>{
+        document.getElementById('summaryLoader').style.display = "none";
+        showMessage("error","Error generating summary!");
+    });
 });
 
 function downloadSummary(){
@@ -295,12 +360,7 @@ function copySummary(){
         .catch(() => {
             showMessage("error","Failed to copy summary!");
         });
-}
-
-</script>
-
-</body>
-</html>
-
-
-
+    }
+    </script>
+    </body>
+    </html>
