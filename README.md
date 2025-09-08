@@ -14,5 +14,9 @@ The system scans the text and generates a summary based on the keywords.
 The summary is displayed, and the user can download or copy it for further use.
 The tool ensures faster and accurate access to important information.
 
+* Below is the user interface of the Smart Evidence Extractor where users can upload files and generate summaries. * 
 
+<img width="1918" height="870" alt="image" src="https://github.com/user-attachments/assets/54763b0f-6fd7-4063-b2a4-05b7d640756d" />
+
+# Accuracy of Summary #
 
