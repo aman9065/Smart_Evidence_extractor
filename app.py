@@ -6,6 +6,7 @@ import pytesseract
 from dotenv import load_dotenv
 from pdf2image import convert_from_path
 from openai import OpenAI
+from docx import Document
 
 load_dotenv()  
 api_key = os.getenv("OPENAI_API_KEY")
@@ -116,6 +117,10 @@ def upload_file():
         elif file_ext == "txt":
             with open(temp_path, "r", encoding="utf-8") as f:
                 extracted_text = f.read()
+        elif file_ext == "docx":
+                   from docx import Document
+                   doc = Document(temp_path)
+                   extracted_text = "\n".join([para.text for para in doc.paragraphs])
 
         else:
             return jsonify({"status": "error", "message": f"Unsupported file type for OCR: {file_ext}"})
