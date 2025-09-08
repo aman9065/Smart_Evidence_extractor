@@ -5,7 +5,17 @@ For example In many software, users often upload evidence in the form of PDFs or
 
 Smart Evidence Extractor is a web-based tool that helps users quickly find information from documents without reading them fully. It supports multiple file types like images, PDFs, and text files. Users can search for keywords, and the system extracts and summarizes related content. The tool saves time and makes document analysis easier and faster using OCR and AI-based summarization.
 
-/ How It Works
+# Technologies Used
+
+Flask – For building the web application and handling routes, sessions, and user interactions.
+OpenCV – For image preprocessing like converting to grayscale and improving text readability.
+Tesseract OCR – For extracting text from images and scanned documents.
+pdf2image – For converting PDF pages into images so OCR can process them.
+OpenAI API (GPT-4o-mini) – For generating summaries based on keywords fom extracted text.
+Python-dotenv – For securely storing API keys and sensitive information.
+io and os modules – For file management, handling uploads, and storing temporary data.
+
+# How It Works
 
 The user uploads a file in formats like PNG, JPG, PDF, or TXT.
 The system processes the file and extracts text using OCR technology.
