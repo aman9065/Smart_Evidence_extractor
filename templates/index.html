@@ -237,10 +237,12 @@ input[type="file"] { display: none; }
             <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
                 <label class="drop-area">
                     <span id="file-label">Click or Drop your file here</span>
-                    <input type="file" name="file" required onchange="updateFileName(event)">
-                </label>
+                    <input type="file" name="file" required onchange="updateFileName(event)"
+                            accept=".png, .jpg, .jpeg, .pdf, .docx, .txt, ">
+                    </label>
                 <button class="btn" type="submit">Upload</button>
             </form>
+            <h6><img src="https://cdn-icons-png.flaticon.com/512/1/1176.png" alt="Info" width="13" height="13" style="vertical-align: middle;">  Allowed type: png, jpg, jpeg, pdf, docx, txt</h6>
 
             <div id="options">
                 <input type="text" id="keyword" placeholder="Enter keywords for summary">
