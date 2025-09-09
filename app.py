@@ -21,7 +21,10 @@ os.makedirs(TEMP_FOLDER, exist_ok=True)
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'pdf', 'docx','txt'}
 
 # POPPLER PATH IN OUR SYSTEM
-POPPLER_PATH = r"C:\Users\amank\Downloads\Release-24.08.0-0\poppler-24.08.0\Library\bin"
+POPPLER_PATH = os.getenv("POPPLER_PATH")
+
+
+   
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -78,12 +81,11 @@ def index():
 
 def upload_file():
     try:
-        if 'file' not in request.files:
-            return jsonify({"status": "error", "message": "No file uploaded."})
+        file = request.files.get('file')
 
-        file = request.files['file']
-        if file.filename == '':
-            return jsonify({"status": "error", "message": "No file selected."})
+        if not file or file.filename == '':
+             return jsonify({"status": "error", "message": "No file uploaded or selected."})
+
 
         if not allowed_file(file.filename):
             return jsonify({"status": "error", "message": "Unsupported file type."})

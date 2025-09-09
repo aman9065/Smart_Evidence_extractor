@@ -1,13 +1,13 @@
-The text includes examples of items in two formats: an unordered list and an ordered list. 
+The text includes mentions of items in the context of lists. Specifically:
 
-In the unordered list, the items are:
-- Item 1
-- Item 2
-- Item 3
+- An unordered list with items labeled as:
+  - Item 1
+  - Item 2
+  - Item 3
 
-In the ordered list, the items are:
-1. First item
-2. Second item
-3. Third item
+- An ordered list with items labeled as:
+  1. First item
+  2. Second item
+  3. Third item
 
-These lists demonstrate how items can be presented in different formats within the document.
+These lists showcase how items can be formatted within the document.
