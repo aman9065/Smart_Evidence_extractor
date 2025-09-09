@@ -20,7 +20,7 @@ TEMP_FOLDER = "temp"
 os.makedirs(TEMP_FOLDER, exist_ok=True)
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'pdf', 'docx','txt'}
 
-# Poppler path in your system
+# POPPLER PATH IN OUR SYSTEM
 POPPLER_PATH = r"C:\Users\amank\Downloads\Release-24.08.0-0\poppler-24.08.0\Library\bin"
 
 def allowed_file(filename):
