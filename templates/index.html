@@ -313,7 +313,7 @@ document.getElementById('summaryBtn').addEventListener('click',function(){
     }
     const keywords = keywordInput.split(",").map(k => k.trim()).filter(k => k);
 
-    // Show mini loader
+    // show mini loder
     document.getElementById('summaryLoader').style.display = "inline-block";
 
     fetch('/summarize', {
