@@ -30,3 +30,6 @@ The tool ensures faster and accurate access to important information.
 
 # Accuracy of Summary #
 
+<img width="1078" height="611" alt="image" src="https://github.com/user-attachments/assets/9925bfd5-cb74-4d47-8d7c-c6f066f7820b" />
+
+
