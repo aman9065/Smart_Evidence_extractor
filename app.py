@@ -29,11 +29,7 @@ POPPLER_PATH = os.getenv("POPPLER_PATH")
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-def clear_old_images():
-    for file in os.listdir(TEMP_FOLDER):
-        file_path = os.path.join(TEMP_FOLDER, file)
-        if os.path.isfile(file_path):
-            os.remove(file_path)
+
 
 def summarize_with_openai(keywords):
     """Summarize extracted text based on multiple keywords using OpenAI"""
@@ -90,7 +86,11 @@ def upload_file():
         if not allowed_file(file.filename):
             return jsonify({"status": "error", "message": "Unsupported file type."})
 
-        clear_old_images()
+         # Clear old files before saving new one
+        for f in os.listdir(TEMP_FOLDER):
+            file_path = os.path.join(TEMP_FOLDER, f)
+            if os.path.isfile(file_path):
+                os.remove(file_path)
         
         filename = file.filename
         file_ext = filename.rsplit('.', 1)[1].lower()

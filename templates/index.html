@@ -4,6 +4,8 @@
     <title>Upload Center</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+
+
 body {
     background: #9dc5ed;
     font-family: 'Segoe UI', sans-serif;
@@ -11,8 +13,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    margin: 0;
-}
+    margin: 0; }
 
 #message {
     position: fixed;
@@ -28,10 +29,10 @@ body {
     min-width: 300px;
     display: none;
 }
-.success { background: #28a745; color: white; }
-.error { background: #dc3545; color: white; }
+ .success { background: #28a745; color: white; }
+ .error { background: #dc3545; color: white; }
 
-.main-container {
+ .main-container {
     display: flex;
     gap: 20px;
     width: 100%;
@@ -110,8 +111,7 @@ input[type="file"] { display: none; }
     color: #2c3e50;
     font-size: 14px;
     white-space: pre-wrap;
-    display: none;
-}
+    display: none; }
 
 .download-btn {
     background: white;
@@ -204,7 +204,7 @@ input[type="file"] { display: none; }
         font-size: 7vw;
     }
 }
-.title-logo {
+ .title-logo {
     height: 3.5vw;
     vertical-align: middle;
     margin-right: 18px;
@@ -218,11 +218,12 @@ input[type="file"] { display: none; }
     }
 }
 
+
     </style>
 </head>
 <body>
     <div class="background-title">
-    <img src="https://cdn-icons-png.flaticon.com/512/2910/2910791.png" alt="Logo" class="title-logo">
+    <img src="{{ url_for('static', filename='uploads/photo 1.png') }}"alt="logo"  class="title-logo">
     Smart Evidence Extractor
      </div>
     <div id="message"></div>
@@ -242,7 +243,7 @@ input[type="file"] { display: none; }
                     </label>
                 <button class="btn" type="submit">Upload</button>
             </form>
-            <h6><img src="https://cdn-icons-png.flaticon.com/512/1/1176.png" alt="Info" width="13" height="13" style="vertical-align: middle;">  Allowed type: png, jpg, jpeg, pdf, docx, txt</h6>
+            <h6><img src="{{ url_for('static', filename='uploads/p2.png') }}" alt="info" width="13" height="13">  Allowed type: png, jpg, jpeg, pdf, docx, txt</h6>
 
             <div id="options">
                 <input type="text" id="keyword" placeholder="Enter keywords for summary">
@@ -262,17 +263,17 @@ input[type="file"] { display: none; }
 
             <div id="downloadSection">
                 <button class="download-btn" onclick="downloadSummary()">
-                    <img src="https://cdn-icons-png.flaticon.com/512/724/724933.png" alt="Download" width="24" height="24">
+                    <img src="{{ url_for('static', filename='uploads/p3.png') }}" alt="Download" width="24" height="24">
                 </button>
                 <button class="download-btn" onclick="copySummary()">
-                    <img src="https://cdn-icons-png.flaticon.com/512/60/60990.png" alt="Copy" width="24" height="24">
+                    <img src="{{ url_for('static', filename='uploads/p4.png') }}" alt="Copy" width="24" height="24">
                 </button>
             </div>
         </div>
     </div>
 
 <script>
-    
+
 function updateFileName(event) {
     const file = event.target.files[0];
     if(file) document.getElementById("file-label").textContent = file.name;
