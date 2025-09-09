@@ -107,7 +107,7 @@ def upload_file():
                 text = pytesseract.image_to_string(gray, lang="eng")
                 extracted_text += f"\n--- Page {i+1} ---\n\n{text}"
 
-        elif file_ext in ["png", "jpg", "jpeg",]:
+        elif file_ext in ["png", "jpg", "jpeg"]:
             image = cv2.imread(temp_path)
             if image is None:
                 return jsonify({"status": "error", "message": "Could not load image."})
