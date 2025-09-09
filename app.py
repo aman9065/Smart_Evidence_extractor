@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, session, send_file
+from flask import Flask, render_template, request, jsonify,  send_file
 import io
 import os
 import cv2
@@ -125,7 +125,7 @@ def upload_file():
         else:
             return jsonify({"status": "error", "message": f"Unsupported file type for OCR: {file_ext}"})
 
-        session["extracted_text"] = extracted_text
+        
         output_path = os.path.join(TEMP_FOLDER, "output.txt")
         with open(output_path, "w", encoding="utf-8") as f:
             f.write(extracted_text)
@@ -149,14 +149,23 @@ def summarize():
         return jsonify({"status": "error", "message": "No keywords provided."})
 
     summary = summarize_with_openai(keywords)
-    session["last_summary"] = summary
+
+    # Save the summary to output.txt so it can be downloaded later
+    output_path = os.path.join(TEMP_FOLDER, "output.txt")
+    with open(output_path, "w", encoding="utf-8") as f:
+        f.write(summary)
+
     return jsonify({"status": "success", "summary": summary})
+
 
 @app.route("/download_summary")
 def download_summary():
-    summary = session.get("last_summary")
-    if not summary:
+    output_path = os.path.join(TEMP_FOLDER, "output.txt")
+    if not os.path.exists(output_path):
         return "No summary is available. Please generate a summary first."
+
+    with open(output_path, "r", encoding="utf-8") as f:
+        summary = f.read()
 
     buffer = io.BytesIO()
     buffer.write(summary.encode("utf-8"))

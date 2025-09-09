@@ -272,6 +272,7 @@ input[type="file"] { display: none; }
     </div>
 
 <script>
+    
 function updateFileName(event) {
     const file = event.target.files[0];
     if(file) document.getElementById("file-label").textContent = file.name;
@@ -349,6 +350,7 @@ document.getElementById('summaryBtn').addEventListener('click',function(){
 function downloadSummary(){
     window.location.href = "/download_summary";
 }
+
 function copySummary(){
     const summaryText = document.getElementById("summaryResult").innerText;
     if(summaryText.trim() === ""){
