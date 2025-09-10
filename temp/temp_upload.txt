@@ -1,0 +1,15 @@
+**Noise Summary:**
+
+The project report analyzes the impact of noise on the readability of CAPTCHA images using Tesseract OCR. Key findings include:
+
+- **Noise Levels and Accuracy:**
+  - At **10% to 25% noise**, OCR maintains high accuracy (85-90%) due to minimal distortion of characters.
+  - As noise increases to **50%**, accuracy drops to around **65-75%**; noise and background interference begin affecting character recognition.
+  - With **75% noise**, accuracy falls further to about **45%**, as many characters become distorted and less distinguishable.
+  - At **90% noise**, OCR struggles significantly and fails to read the CAPTCHA correctly, though partial recognitions may occur for some characters.
+
+- **Effects of Background:**
+  - Background colors can impact readability, particularly when combined with high noise levels, reducing contrast and complicating character segmentation.
+
+- **Overall Conclusion:**
+  - Increasing noise levels enhances CAPTCHA security but also heightens the risk of OCR failure, particularly beyond 50% noise. Achieving a balance between CAPTCHA security and OCR accessibility is essential.

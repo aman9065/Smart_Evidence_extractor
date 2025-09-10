@@ -223,7 +223,7 @@ input[type="file"] { display: none; }
 </head>
 <body>
     <div class="background-title">
-    <img src="{{ url_for('static', filename='uploads/photo 1.png') }}"alt="logo"  class="title-logo">
+    <img src="static/p1.png" alt = "logo" class="title-logo">
     Smart Evidence Extractor
      </div>
     <div id="message"></div>
@@ -243,7 +243,7 @@ input[type="file"] { display: none; }
                     </label>
                 <button class="btn" type="submit">Upload</button>
             </form>
-            <h6><img src="{{ url_for('static', filename='uploads/p2.png') }}" alt="info" width="13" height="13">  Allowed type: png, jpg, jpeg, pdf, docx, txt</h6>
+            <h6><img src="static/p2.png" alt="info" width="13" height="13">  Allowed type: png, jpg, jpeg, pdf, docx, txt</h6>
 
             <div id="options">
                 <input type="text" id="keyword" placeholder="Enter keywords for summary">
@@ -263,10 +263,10 @@ input[type="file"] { display: none; }
 
             <div id="downloadSection">
                 <button class="download-btn" onclick="downloadSummary()">
-                    <img src="{{ url_for('static', filename='uploads/p3.png') }}" alt="Download" width="24" height="24">
+                    <img src="static/p3.png" alt="Download" width="24" height="24">
                 </button>
                 <button class="download-btn" onclick="copySummary()">
-                    <img src="{{ url_for('static', filename='uploads/p4.png') }}" alt="Copy" width="24" height="24">
+                    <img src="static/p4.png" alt="Copy" width="24" height="24">
                 </button>
             </div>
         </div>
