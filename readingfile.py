@@ -5,7 +5,7 @@ from pdf2image import convert_from_path
 
 # Poppler path (bin folder ka exact path yaha dalna)
 TEMP_FILE_PATH = "temp/temp_upload.pdf"
-POPPLER_PATH = r"C:\Users\amank\Downloads\Release-24.08.0-0\poppler-24.08.0\Library\bin" 
+POPPLER_PATH = os.getenv("POPPLER_PATH")
 
 if not os.path.exists(TEMP_FILE_PATH):
     print(" No uploaded file found! Please upload first.")
