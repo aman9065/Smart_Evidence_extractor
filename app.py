@@ -74,7 +74,6 @@ def index():
     return render_template('index.html')
 
 @app.route('/upload', methods=['POST'])
-
 def upload_file():
     try:
         file = request.files.get('file')
@@ -132,7 +131,7 @@ def upload_file():
         with open(output_path, "w", encoding="utf-8") as f:
             f.write(extracted_text)
 
-        return jsonify({"status": "success", "message": "File uploaded successfully", "text": extracted_text})
+        return jsonify({"status": "success", "message": "File uploaded successfully"})
 
     except Exception as e:
         import traceback; traceback.print_exc()  # log the actual error

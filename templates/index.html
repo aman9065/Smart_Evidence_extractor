@@ -273,12 +273,12 @@ input[type="file"] { display: none; }
     </div>
 
 <script>
-
+//Function to update the file name displayed in the UI when a user selects a file
 function updateFileName(event) {
     const file = event.target.files[0];
     if(file) document.getElementById("file-label").textContent = file.name;
 }
-
+// Function to show messages (success or error) to the user
 function showMessage(type,text){
     let msg=document.getElementById("message");
     msg.className=type;
@@ -286,14 +286,14 @@ function showMessage(type,text){
     msg.style.display="block";
     setTimeout(()=>{ msg.style.display="none"; msg.className=""; msg.innerText=""; },3000);
 }
-
+// Handle file upload form submission
 document.getElementById("uploadForm").addEventListener("submit",function(e){
     e.preventDefault();
     let formData=new FormData(this);
-
+    // show overlay loader
     const overlay = document.getElementById("overlay");
     overlay.style.display = "flex";
-
+    // Send the file to the server
     fetch("/upload",{method:"POST",body:formData})
     .then(res=>res.json())
     .then(data=>{
@@ -301,12 +301,13 @@ document.getElementById("uploadForm").addEventListener("submit",function(e){
         showMessage(data.status==="success"?"success":"error",data.message || "Uploaded");
         if(data.status==="success") document.getElementById("options").style.display="block";
     })
+    // Hide overlay loader and show error message on failure
     .catch(()=>{
         overlay.style.display = "none";
         showMessage("error","Error uploading file!");
     });
 });
-
+// Handle summary generation
 document.getElementById('summaryBtn').addEventListener('click',function(){
     const keywordInput = document.getElementById('keyword').value.trim();
     if(!keywordInput){
@@ -347,11 +348,11 @@ document.getElementById('summaryBtn').addEventListener('click',function(){
         showMessage("error","Error generating summary!");
     });
 });
-
+// Function to download the summary as a text file
 function downloadSummary(){
     window.location.href = "/download_summary";
 }
-
+// Function to copy the summary to clipboard
 function copySummary(){
     const summaryText = document.getElementById("summaryResult").innerText;
     if(summaryText.trim() === ""){
