@@ -1,43 +1,15 @@
+**Noise Summary:**
 
---- Page 1 ---
+The project report analyzes the impact of noise on the readability of CAPTCHA images using Tesseract OCR. Key findings include:
 
-Sample Document for PDF Testing
+- **Noise Levels and Accuracy:**
+  - At **10% to 25% noise**, OCR maintains high accuracy (85-90%) due to minimal distortion of characters.
+  - As noise increases to **50%**, accuracy drops to around **65-75%**; noise and background interference begin affecting character recognition.
+  - With **75% noise**, accuracy falls further to about **45%**, as many characters become distorted and less distinguishable.
+  - At **90% noise**, OCR struggles significantly and fails to read the CAPTCHA correctly, though partial recognitions may occur for some characters.
 
-Introduction
+- **Effects of Background:**
+  - Background colors can impact readability, particularly when combined with high noise levels, reducing contrast and complicating character segmentation.
 
-This is a simple document created to test basic PDF functionality. It includes various text formatting
-options to ensure proper rendering in PDF readers.
-
-Text Formatting Examples
-
-1. Bold text is used for emphasis.
-2. Italic text can be used for titles or subtle emphasis.
-3. Strikethrough is used to show deleted text.
-
-Lists
-
-Here's an example of an unordered list:
-
-e Item 1
-e Item 2
-e Item 3
-
-And here's an ordered list:
-
-1. First item
-2. Second item
-3. Third item
-
-Quote
-
-This is an example of a block quote. It can be used to highlight important information or
-
-citations.
-Table
-Header 1 Header 2 Header 3
-Row 1, Col 1 Row 1, Col 2 Row 1, Col 3
-Row 2, Col 1 Row 2, Col 2 Row 2, Col 3
-
-This document demonstrates various formatting options that should translate well to PDF format.
-
-This sample PDF file is provided by Sample-Files.com. Visit us for more sample files and resources.
+- **Overall Conclusion:**
+  - Increasing noise levels enhances CAPTCHA security but also heightens the risk of OCR failure, particularly beyond 50% noise. Achieving a balance between CAPTCHA security and OCR accessibility is essential.
