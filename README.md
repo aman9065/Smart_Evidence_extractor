@@ -19,7 +19,7 @@ io and os modules – For file management, handling uploads, and storing tempora
 
 # How It Works
 
-The user uploads a file in formats like PNG, JPG, PDF, or TXT.
+The user uploads a file in formats like PNG, JPG, PDF, DOCX or TXT.
 The system processes the file and extracts text using OCR technology.
 The user enters one or more keywords to search within the document.
 The system scans the text and generates a summary based on the keywords.
